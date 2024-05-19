@@ -57,10 +57,17 @@ export class userService {
         if (!isValidPassword) {
             throw new BadRequestException('incorrect password or email')
         } 
-        const accessToken = await generateAccessToken(body,
+
+        const payload = {
+            id: user?.id,
+            email: user?.email,
+            password: user?.password,
+        }
+
+        const accessToken = await generateAccessToken(payload,
             { secret: EnvFile.JWT_SECRET })
 
-        const refreshToken = await generateRefreshToken(body, {
+        const refreshToken = await generateRefreshToken(payload, {
            secret: EnvFile.REFRESH_TOKEN_SECRET
        })
         
