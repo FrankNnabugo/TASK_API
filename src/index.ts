@@ -5,6 +5,7 @@ import { Server } from "socket.io";
 import { EnvFile } from "./config";
 import router from "./route";
 import { handleError } from "./middleware/error-handler";
+import { logger } from "./middleware/logger";
 const PORT = EnvFile.PORT;
 
 const app = express();
@@ -12,6 +13,8 @@ const app = express();
 app.use(cors({ origin: "*" }));
 
 app.use(express.json());
+
+app.use(logger);
 
 app.get("/", (req, res) => {
     res.send("hello from server")
