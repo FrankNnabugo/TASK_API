@@ -10,7 +10,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     const { id } = req.params;
     const user = await prisma.user.findUnique({
         where: {
-            id: id
+            id: +id
         },
         select: {
             id: true,

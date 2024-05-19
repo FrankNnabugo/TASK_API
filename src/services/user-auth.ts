@@ -1,18 +1,18 @@
 import prisma from "../config/prisma";
 import { BadRequestException, NotFoundException } from "../utilities/error-class";
-import { CreateUserSchemaInputType, LoginUserSchemaInputType, FindUserSchemaInputType } from "../validation/user-schema";
+import { CreateUserSchemaInputType, LoginUserSchemaInputType} from "../validation/user-schema";
 import { generateAccessToken, generateRefreshToken, hashPassword, verifyPassword, verifyRefreshToken } from "../utilities/helper";
 import { EnvFile } from "../config";
 
 
 export class userService {
-    async createUser(id: FindUserSchemaInputType['params'], body: CreateUserSchemaInputType['body']) {
+    async createUser(id: string, body: CreateUserSchemaInputType['body']) {
         if (!body) {
             throw new BadRequestException('you need to pass in name, password, email to register')
         }
         const user = await prisma.user.findUnique({
             where: {
-                id: +id.id
+                id: +id
             }
         });
         if (user) {
@@ -38,14 +38,14 @@ export class userService {
 
 
 
-    async login(id: FindUserSchemaInputType['params'], body: LoginUserSchemaInputType['body']) {
+    async login(id: string, body: LoginUserSchemaInputType['body']) {
         const registrationEndPoint = `localhost: ${EnvFile.PORT}/Api/V1/user/register`
         if (!body.email && !body.Password) {
             throw new BadRequestException("you need to pass in email and password to login");
         }
         const user = await prisma.user.findUnique({
             where: {
-                id: id.id
+                id: +id
             }
         });
 
@@ -66,7 +66,7 @@ export class userService {
         
         await prisma.user.update({
             where: {
-                id: id.id
+                id: +id
             },
             data: {
                 accessToken: accessToken,
@@ -84,14 +84,14 @@ export class userService {
 
 
 
-    async refreshToken(id: FindUserSchemaInputType['params']) {
-        if (!id.id) {
+    async refreshToken(id: string) {
+        if (!id) {
             throw new BadRequestException('a valid id is required');
         }
 
         const user = await prisma.user.findUnique({
             where: {
-                id: id.id
+                id: +id
             },
             select: {
                 id: true,
@@ -128,7 +128,7 @@ export class userService {
 
         await prisma.user.update({
             where: {
-                id: id.id
+                id: +id
             },
             data: {
                 accessToken: newAccessToken,
@@ -139,7 +139,7 @@ export class userService {
 
 
     
-    async logOut(id: FindUserSchemaInputType['params']) {
+    async logOut(id: string) {
         await prisma.user.update({
             select: {
                 accessToken: true,
@@ -150,7 +150,7 @@ export class userService {
                 accessToken: null
             },
             where: {
-                id: id.id
+                id: +id
             }
         });
 

@@ -28,14 +28,7 @@ export const loginUserSchema = z.object({
 
 
 
-export const findUserSchema = z.object({
-    params: z.object({
-       id: z.number().int()
-    })
-})
-
 
 
 export type CreateUserSchemaInputType = z.infer<typeof createUserSchema>;
 export type LoginUserSchemaInputType = z.infer<typeof loginUserSchema>;
-export type FindUserSchemaInputType = z.infer<typeof findUserSchema>;

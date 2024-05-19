@@ -17,7 +17,7 @@ export class TaskController {
     
     async getTask(req: Request, res: Response) {
         const { id } = req.params;
-        return await this.taskService.getTask(+id)
+        return await this.taskService.getTask(id)
     }
 
 
@@ -29,7 +29,7 @@ export class TaskController {
     async updateTask(req: Request, res: Response) {
         const { id } = req.params;
         const { body } = req.body;
-        return await this.taskService.updateTask(+id, body)
+        return await this.taskService.updateTask(id, body)
     }
 
 

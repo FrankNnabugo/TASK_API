@@ -1,7 +1,7 @@
 
 import prisma from "../config/prisma";
 import { BadRequestException, NotFoundException } from "../utilities/error-class";
-import { CreateTaskInputSchemaType, FindTaskInputSchemaType } from "../validation/task-schema";
+import { CreateTaskInputSchemaType} from "../validation/task-schema";
 import { UpdateTaskDto } from "../@types/types";
 import { TaskStatusType } from "../@types/types";
 
@@ -26,10 +26,10 @@ export class TaskService {
 
     }
 
-    async getTask(id: FindTaskInputSchemaType['params']) {
+    async getTask(id: string) {
         const task = await prisma.task.findUnique({
             where: {
-                id: +id.id
+                id: +id
             },
             select: {
                 id: true,
@@ -86,7 +86,7 @@ export class TaskService {
 
 
 
-    async updateTask(id: FindTaskInputSchemaType['params'], body: UpdateTaskDto) {
+    async updateTask(id: string, body: UpdateTaskDto) {
         if (!body.title || !body.description) {
             throw new BadRequestException
                 ("you need to pass in at least one of title or description to update a task")
@@ -96,7 +96,7 @@ export class TaskService {
             case TaskStatusType.ongoing: {
                 const task = await prisma.task.update({
                     where: {
-                        id: +id.id
+                        id: +id
                     },
                     data: {
                         title: body.title,
@@ -114,7 +114,7 @@ export class TaskService {
             case TaskStatusType.completed: {
                 const task = await prisma.task.update({
                     where: {
-                        id: +id.id
+                        id: +id
                     },
                     data: {
                         title: body.title,
@@ -133,10 +133,10 @@ export class TaskService {
 
 
 
-    async deleteTask(id: FindTaskInputSchemaType['params']) {
+    async deleteTask(id: string) {
              await prisma.task.delete({
             where: {
-                id: +id.id
+                id: +id
             }
         });
 

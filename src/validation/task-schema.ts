@@ -13,19 +13,12 @@ export const createTaskSchema = z.object({
 })
 
 
-export const findTaskSchema = z.object({
-    params: z.object({
-        id: z.number().int()
-
-    })
-
-})
 
 
 
 
 export type CreateTaskInputSchemaType = z.infer<typeof createTaskSchema>;
-export type FindTaskInputSchemaType = z.infer<typeof findTaskSchema>;
+
 
 
 
