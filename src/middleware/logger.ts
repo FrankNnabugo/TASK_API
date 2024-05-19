@@ -5,6 +5,7 @@ export const logger = async (req: Request, res: Response, next: NextFunction)=>{
         path: req.url,
         method: req.method,
         headers: req.headers,
+        ip: req.ip
     });
     return next();
 }
