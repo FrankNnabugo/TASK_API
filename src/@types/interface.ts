@@ -1,5 +1,5 @@
 
-export interface ConfigString {
+export interface EnvType{
     DATABASE_URL: string,
     PORT: string,
     JWT_SECRET: string,
