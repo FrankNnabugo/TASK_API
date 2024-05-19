@@ -1,5 +1,5 @@
 import * as dotEnv from "dotenv"
-import { ConfigString } from "../@types/interface";
+import { EnvType} from "../@types/interface";
 
 
 const configFile = "./.env"
