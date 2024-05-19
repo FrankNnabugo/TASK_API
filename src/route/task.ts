@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { TaskController } from "../controller/task";
 const taskController = new TaskController();
+import { authenticate } from "../middleware/auth-user";
 const taskRouter = Router();
 
-taskRouter.post("/task/create", taskController.createTask);
-taskRouter.post("/task/update", taskController.updateTask);
-taskRouter.get("/task/:id", taskController.getTask);
-taskRouter.get("/task", taskController.getAllTask);
-taskRouter.delete("/task/:id", taskController.deleteTask);
+taskRouter.post("/task/create", authenticate, taskController.createTask);
+taskRouter.post("/task/update", authenticate, taskController.updateTask);
+taskRouter.get("/task/:id", authenticate, taskController.getTask);
+taskRouter.get("/task", authenticate, taskController.getAllTask);
+taskRouter.delete("/task/:id", authenticate, taskController.deleteTask);
 
 export default taskRouter; 
