@@ -14,6 +14,7 @@ export class UserController{
         try {
             const { id } = req.params;
             const { body } = req.body;
+            console.log({id, body})
             return await this.userService.createUser(id, body)
         }
         
