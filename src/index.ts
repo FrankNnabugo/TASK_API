@@ -3,10 +3,12 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import { EnvFile } from "./config";
-import router from "./route";
+//import router from "./route";
 import { handleError } from "./middleware/error-handler";
 import { logger } from "./middleware/logger";
 const PORT = EnvFile.PORT;
+import taskRouter from "./route/task";
+import userRouter from "./route/auth-route";
 
 const app = express();
 
@@ -20,7 +22,8 @@ app.get("/", (req, res) => {
     res.send("hello from server")
 });
 
-app.use(router);
+app.use("/Api/v1/", taskRouter );
+app.use("/Api/v1/", userRouter);
 
 app.use(handleError);
 

@@ -3,14 +3,26 @@ import * as z from "zod";
 
 export const createUserSchema = z.object({
     body: z.object({
-        name: z.string({ required_error: "name can only be a valid string" })
-            .min(5, "name is required"),
-        password: z.string({ required_error: "password can only be a valid string" })
-        .min(6, "password is required"),
-        email: z.string({ required_error: "email can only be a valid string" })
-        .min(5, "email is required"),
-        phoneNumber: z.string({ required_error: "input a valid phone number" }),
-        residentialAddress: z.string({ required_error: "residential address can only be a  valid string" }),
+
+        name: z.string({
+            required_error: "name is required",
+            invalid_type_error: "name can only be a valid string"
+        })
+            .min(2),
+        password: z.string({
+            required_error: "password is required",
+        invalid_type_error: "password can only be a valid string"})
+            .min(6),
+        
+        email: z.string({
+            required_error: "email is required",
+            invalid_type_error: "email can only be a valid staring"
+        })
+            .min(6),
+        
+        phoneNumber: z.string({invalid_type_error: "phone number can only be a valid string"}).nullable(),
+
+        residentialAddress: z.string({invalid_type_error: "address can only be a valid string"}).nullable()
     })
 })
 
@@ -18,11 +30,17 @@ export const createUserSchema = z.object({
 
 export const loginUserSchema = z.object({
     body: z.object({
-        Password: z.string({ required_error: "password can only be a valid string" })
-            .min(6, "password is required"),
-        email: z.string({ required_error: "" })
-            .min(1, "email is required")
-        .email("valid address is required")
+        Password: z.string({
+            required_error: "password is required",
+        invalid_type_error: "password can only be a valid string"})
+            .min(6),
+        
+        email: z.string({
+            required_error: "email is required",
+            invalid_type_error: "email can only be a valid staring"
+        })
+            .min(6)
+        .email()
     })
 })
 

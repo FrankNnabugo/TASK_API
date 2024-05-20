@@ -10,3 +10,4 @@ export interface UpdateTaskDto{
     description?: string,
     status: TaskStatusType
 }
+

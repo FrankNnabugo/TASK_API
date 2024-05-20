@@ -7,6 +7,9 @@ import { TaskStatusType } from "../@types/types";
 
 
 export class TaskService {
+
+
+    
     async createTask(body: CreateTaskInputSchemaType['body']) {
         if (!body.title && !body.description) {
             throw new BadRequestException("you need to pass in title and description to create a task")
@@ -43,7 +46,7 @@ export class TaskService {
         if (!task) {
             throw new NotFoundException ("no task record with the provided found");
         }
-        
+        console.log(task)
         return {
             message: " task successfully retrieved",
             data: task

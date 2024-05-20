@@ -6,6 +6,8 @@ import { EnvFile } from "../config";
 
 
 export class userService {
+
+    
     async createUser(id: string, body: CreateUserSchemaInputType['body']) {
         if (!body) {
             throw new BadRequestException('you need to pass in name, password, email to register')
@@ -26,10 +28,10 @@ export class userService {
                 password: hashedPassword,
                 phoneNumber: body.phoneNumber,
                 residentialAddress: body.residentialAddress,
-            
             }
         });
-
+ 
+        console.log("new user created", newUser)
         return {
             message: "user successfully created",
             data: newUser
@@ -108,6 +110,10 @@ export class userService {
                 accessToken: true
             }
         });
+
+         if(!user){
+             throw new NotFoundException("user not found");
+        }
         
         if (!user?.refreshToken && user?.refreshToken?.length === 0) {
             throw new NotFoundException("no record of a refresh token found")

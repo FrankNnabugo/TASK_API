@@ -1,9 +1,10 @@
-import { Router } from "express";
+import express from "express";
 import { UserController } from "../controller/user-auth";
 import { authenticate } from "../middleware/auth-user";
-
-const userRouter = Router();
 const userController = new UserController();
+
+const userRouter = express.Router();
+
 
 
 
@@ -13,3 +14,4 @@ userRouter.post('/user/auth/refreshToken', authenticate, userController.refreshT
 userRouter.post('/user/auth/logout', authenticate, userController.logout);
 
 export default userRouter;
+

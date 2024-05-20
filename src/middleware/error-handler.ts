@@ -8,14 +8,14 @@ export const handleError = async (err: Error,
     req: Request, res: Response, next: NextFunction) => {
     const statusCode = res.statusCode ? res.statusCode : 500;
     res.status(statusCode);
-    res.json({
+    console.log({
         name: err.message,
         message: err.stack,
         stack: err.stack,
     });
 
     if (err instanceof PrismaClientUnknownRequestError) {
-        res.json({
+        console.log({
             message: err.message,
             name: err.name,
             stack: err.stack
@@ -23,7 +23,7 @@ export const handleError = async (err: Error,
     }
 
     if (err instanceof ApiError) {
-        res.json({
+        console.log({
             message: err.message,
             name: err.name,
             stack: err.stack,
@@ -32,9 +32,9 @@ export const handleError = async (err: Error,
     }
     
     if (err instanceof z.ZodError) {
-        res.json({
-            message: err.issues,
-            message1: err.message,
+        console.log({
+            issues: err.issues,
+            message: err.message,
             name: err.name,
             stack: err.name
         })
