@@ -1,8 +1,8 @@
-import express from "express";
+import {Router} from "express";
 import { TaskController } from "../controller/task";
 const taskController = new TaskController();
 import { authenticate } from "../middleware/auth-user";
-const taskRouter = express.Router();
+const taskRouter = Router()
 
 
 taskRouter.post("/task/create", authenticate, taskController.createTask);

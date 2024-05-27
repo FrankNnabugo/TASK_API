@@ -41,7 +41,7 @@ export class userService {
 
 
     async login(id: string, body: LoginUserSchemaInputType['body']) {
-        const registrationEndPoint = `localhost: ${EnvFile.PORT}/Api/V1/user/register`
+        const registrationEndPoint = `localhost: ${EnvFile.PORT}/Api/V1/user/auth/register`
         if (!body.email && !body.Password) {
             throw new BadRequestException("you need to pass in email and password to login");
         }
@@ -55,7 +55,7 @@ export class userService {
             throw new NotFoundException(`user does not exist, click ${registrationEndPoint} to register `)
         }
 
-        const isValidPassword = await verifyPassword(body.Password, user?.password || "");
+        const isValidPassword = await verifyPassword(body.Password, user!.password);
         if (!isValidPassword) {
             throw new BadRequestException('incorrect password or email')
         } 

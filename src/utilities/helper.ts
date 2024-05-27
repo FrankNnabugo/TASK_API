@@ -50,3 +50,8 @@ export const verifyAccesstoken = async (body: any, secret: any) => {
     const token = await jwt.verify(body, secret)
     return token;
 }
+
+export const decodeJwt = async (body: any) => {
+    const token = await jwt.decode(body);
+    return token;
+}

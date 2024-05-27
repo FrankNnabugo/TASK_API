@@ -4,8 +4,8 @@ import prisma from "../config/prisma"
 import { NotFoundException, UnAuthenticatedException } from "../utilities/error-class";
 import { verifyAccesstoken} from "../utilities/helper";
 import { EnvFile } from "../config";
-import jwt from "jsonwebtoken";
 import { JwtPayload } from "jsonwebtoken";
+import { decodeJwt } from "../utilities/helper";
 
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +23,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         }
 
         const payload = token!.split(".")[1];
-        const decodePayload = jwt.decode(payload) as JwtPayload;
+        const decodePayload = decodeJwt(payload) as JwtPayload;
 
         const { id } = decodePayload;
 

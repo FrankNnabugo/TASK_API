@@ -3,12 +3,12 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import { EnvFile } from "./config";
-//import router from "./route";
+import router from "./route";
 import { handleError } from "./middleware/error-handler";
 import { logger } from "./middleware/logger";
+import { validateInput } from "./middleware/input-validator";
 const PORT = EnvFile.PORT;
-import taskRouter from "./route/task";
-import userRouter from "./route/auth-route";
+
 
 const app = express();
 
@@ -16,14 +16,15 @@ app.use(cors({ origin: "*" }));
 
 app.use(express.json());
 
+app.use(validateInput);
+
 app.use(logger);
 
 app.get("/", (req, res) => {
     res.send("hello from server")
 });
 
-app.use("/Api/v1/", taskRouter );
-app.use("/Api/v1/", userRouter);
+app.use(router)
 
 app.use(handleError);
 

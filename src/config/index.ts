@@ -1,7 +1,6 @@
 import * as dotEnv from "dotenv"
 
 
-
 const configFile = "./.env"
 if (configFile) {
     dotEnv.config({ path: configFile });

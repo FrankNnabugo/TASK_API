@@ -4,7 +4,6 @@ import { ZodError } from "zod";
 
 export class UserController{
     
-
     userService;
     constructor() {
         this.userService = new userService();
